@@ -1,19 +1,16 @@
 package giuseppelongo.capstone.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "disponibilità")
 public class Disponibilità {
@@ -28,4 +25,7 @@ public class Disponibilità {
     private String fasciaOraria;
 
     private int postiDisponibili;
+
+    @OneToMany(mappedBy = "disponibilità")
+    private List<Prenotazione> prenotazioni;
 }

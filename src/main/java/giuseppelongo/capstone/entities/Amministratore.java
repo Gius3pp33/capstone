@@ -1,18 +1,15 @@
 package giuseppelongo.capstone.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "amministratori")
 public class Amministratore {
@@ -24,4 +21,7 @@ public class Amministratore {
     private String email;
 
     private String password;
+
+    @OneToMany(mappedBy = "amministratore")
+    private List<Menù> menù;
 }

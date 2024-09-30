@@ -1,9 +1,6 @@
 package giuseppelongo.capstone.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,4 +23,12 @@ public class Prenotazione {
     private LocalDate data;
 
     private int numeroPersone;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "disponibilità_id")
+    private Disponibilità disponibilità;
 }

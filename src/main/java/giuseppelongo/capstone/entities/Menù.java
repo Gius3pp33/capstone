@@ -1,9 +1,6 @@
 package giuseppelongo.capstone.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -28,4 +25,7 @@ public class Menù {
     private Double prezzo;
 
 
+    @ManyToOne
+    @JoinColumn(name = "amministratore_id")
+    private Amministratore amministratore;
 }
