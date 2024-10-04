@@ -27,5 +27,5 @@ public class Menù {
 
     @ManyToOne
     @JoinColumn(name = "amministratore_id")
-    private Amministratore amministratore;
+    private Utente utente;
 }

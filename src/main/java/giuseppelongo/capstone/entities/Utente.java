@@ -11,17 +11,25 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "amministratori")
-public class Amministratore {
+@Table(name = "utenti")
+public class Utente {
     @Id
     @GeneratedValue
     @Setter(AccessLevel.NONE)
     private UUID id;
 
+    private String nome;
+    private String cognome;
     private String email;
-
     private String password;
 
-    @OneToMany(mappedBy = "amministratore")
+
+    @Enumerated(EnumType.STRING)
+    private Ruolo ruolo;
+
+    @OneToMany(mappedBy = "utente")
+    private List<Prenotazione> prenotazioni;
+
+    @OneToMany(mappedBy = "utente")
     private List<Menù> menù;
 }

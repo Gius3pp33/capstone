@@ -25,8 +25,8 @@ public class Prenotazione {
     private int numeroPersone;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name = "utente_id")
+    private Utente utente;
 
     @ManyToOne
     @JoinColumn(name = "disponibilità_id")
