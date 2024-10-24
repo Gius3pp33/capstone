@@ -56,4 +56,5 @@ public class DisponibilitàService {
     public void deleteById(UUID id) {
         disponibilitàRepository.deleteById(id);
     }
+    
 }

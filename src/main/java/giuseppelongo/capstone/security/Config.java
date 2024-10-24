@@ -42,12 +42,22 @@ public class Config {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+
+        // Imposta le origini autorizzate (frontend React)
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+
+        // Imposta i metodi HTTP autorizzati
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Permetti tutti gli headers
         configuration.setAllowedHeaders(Arrays.asList("*"));
+
+        // Permetti l'invio di credenziali (cookie, autenticazioni, etc.)
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }

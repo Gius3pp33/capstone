@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,5 +43,11 @@ public class DisponibilitàController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminaDisponibilità(@PathVariable UUID id) {
         disponibilitàService.deleteById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<NewDisponibilitàRespDTO>> trovaTutteLeDisponibilità() {
+        List<NewDisponibilitàRespDTO> disponibilità = disponibilitàService.findAll();
+        return ResponseEntity.ok(disponibilità);
     }
 }
