@@ -41,6 +41,8 @@ public class PrenotazioneService {
         prenotazione.setUtente(utente);
         prenotazione.setNumeroPersone(dto.numeroPersone());
         prenotazione.setData(dto.data());
+        prenotazione.setNome(dto.nome());
+        prenotazione.setRecapito(dto.recapito());
 
         disponibilità.setPostiDisponibili(disponibilità.getPostiDisponibili() - dto.numeroPersone());
         disponibilitàService.save(disponibilità);
@@ -52,8 +54,9 @@ public class PrenotazioneService {
                 disponibilità.getData(),
                 prenotazioneSalvata.getNumeroPersone(),
                 disponibilità.getId().toString(),
-                utente.getId().toString()
-
+                utente.getId().toString(),
+                prenotazioneSalvata.getNome(),
+                prenotazioneSalvata.getRecapito()
         );
     }
 
@@ -68,9 +71,9 @@ public class PrenotazioneService {
                         prenotazione.getDisponibilità().getData(),
                         prenotazione.getNumeroPersone(),
                         prenotazione.getDisponibilità().getId().toString(),
-                        prenotazione.getUtente().getId().toString()
-
-
+                        prenotazione.getUtente().getId().toString(),
+                        prenotazione.getNome(),
+                        prenotazione.getRecapito()
                 ))
                 .collect(Collectors.toList());
     }

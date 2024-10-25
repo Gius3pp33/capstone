@@ -31,4 +31,7 @@ public class Prenotazione {
     @ManyToOne
     @JoinColumn(name = "disponibilità_id")
     private Disponibilità disponibilità;
+
+    private String nome;
+    private String recapito;
 }

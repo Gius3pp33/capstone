@@ -33,7 +33,9 @@ public class PrenotazioneController {
                         p.getDisponibilità().getData(),
                         p.getNumeroPersone(),
                         p.getDisponibilità().getId().toString(),
-                        p.getUtente().getId().toString()
+                        p.getUtente().getId().toString(),
+                        p.getNome(),
+                        p.getRecapito()
                 ))
                 .orElseThrow(() -> new IllegalArgumentException("Prenotazione non trovata"));
         return ResponseEntity.ok(prenotazione);

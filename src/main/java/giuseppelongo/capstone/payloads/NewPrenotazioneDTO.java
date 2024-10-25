@@ -17,6 +17,12 @@ public record NewPrenotazioneDTO(
         String utenteId,
 
         @NotEmpty(message = "L'ID della disponibilità è obbligatorio")
-        String disponibilitàId
+        String disponibilitàId,
+
+        @NotEmpty(message = "Il nome è obbligatorio")
+        String nome,
+
+        @NotEmpty(message = "Il recapito è obbligatorio")
+        String recapito
 ) {
 }
