@@ -3,6 +3,7 @@ package giuseppelongo.capstone.security;
 import giuseppelongo.capstone.entities.Utente;
 import giuseppelongo.capstone.exceptions.UnauthorizedException;
 import giuseppelongo.capstone.services.UtenteService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,14 +37,12 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }
 
         String accessToken = authHeader.substring(7);
-
         jwtTools.verifyToken(accessToken);
 
-
-        String id = jwtTools.extractIdFromToken(accessToken);
+        Claims claims = jwtTools.extractClaimsFromToken(accessToken);
+        String id = claims.getSubject();
         Utente currentUser = utenteService.findById(UUID.fromString(id))
                 .orElseThrow(() -> new UnauthorizedException("Utente non trovato!"));
-
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(currentUser, null, List.of(currentUser.getRuolo().getAuthority()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -53,7 +52,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-
         return new AntPathMatcher().match("/auth/**", request.getServletPath());
     }
 }

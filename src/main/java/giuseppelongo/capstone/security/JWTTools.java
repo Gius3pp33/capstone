@@ -2,6 +2,7 @@ package giuseppelongo.capstone.security;
 
 import giuseppelongo.capstone.entities.Utente;
 import giuseppelongo.capstone.exceptions.UnauthorizedException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,10 +17,11 @@ public class JWTTools {
 
     public String createToken(Utente utente) {
         return Jwts.builder()
-                
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
-                .subject(String.valueOf(utente.getId()))
+                .setSubject(String.valueOf(utente.getId()))
+                .claim("role", utente.getRuolo().name())
+                .claim("nome", utente.getNome())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
@@ -36,7 +38,16 @@ public class JWTTools {
         }
     }
 
+    public Claims extractClaimsFromToken(String accessToken) {
+        return Jwts.parser()
+                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody();
+    }
+
     public String extractIdFromToken(String accessToken) {
-        return Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parseSignedClaims(accessToken).getPayload().getSubject();
+        Claims claims = extractClaimsFromToken(accessToken);
+        return claims.getSubject(); // Restituisce direttamente l'ID
     }
 }
