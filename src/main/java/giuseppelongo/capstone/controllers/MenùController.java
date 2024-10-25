@@ -26,37 +26,35 @@ public class MenùController {
     @Autowired
     private UtenteService utenteService;
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public NewMenùRespDTO creaMenù(@RequestBody NewMenùDTO dto) {
         UUID utenteId = dto.utenteId();
         Utente utente = utenteService.findById(utenteId)
                 .orElseThrow(() -> new IllegalArgumentException("Utente non trovato"));
-        Menù menù = menùService.save(dto, utente);
-        return new NewMenùRespDTO(menù.getId().toString(), menù.getNomePiatto(), menù.getDescrizione(), menù.getPrezzo());
-    }
 
+        
+        Menù menù = menùService.save(dto, utente);
+        return new NewMenùRespDTO(menù.getId().toString(), menù.getNomePiatto(), menù.getDescrizione(), menù.getPrezzo(), menù.getCategoria());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<NewMenùRespDTO> trovaMenùPerId(@PathVariable UUID id) {
         Optional<Menù> menùOpt = menùService.findById(id);
         if (menùOpt.isPresent()) {
             Menù menù = menùOpt.get();
-            return ResponseEntity.ok(new NewMenùRespDTO(menù.getId().toString(), menù.getNomePiatto(), menù.getDescrizione(), menù.getPrezzo()));
+            return ResponseEntity.ok(new NewMenùRespDTO(menù.getId().toString(), menù.getNomePiatto(), menù.getDescrizione(), menù.getPrezzo(), menù.getCategoria())); // Includi la categoria
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-
     @GetMapping
     public List<NewMenùRespDTO> trovaTuttiIMenù() {
         return menùService.findAll().stream()
-                .map(menù -> new NewMenùRespDTO(menù.getId().toString(), menù.getNomePiatto(), menù.getDescrizione(), menù.getPrezzo()))
+                .map(menù -> new NewMenùRespDTO(menù.getId().toString(), menù.getNomePiatto(), menù.getDescrizione(), menù.getPrezzo(), menù.getCategoria())) // Includi la categoria
                 .collect(Collectors.toList());
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -24,6 +24,7 @@ public class Menù {
 
     private Double prezzo;
 
+    private String categoria;
 
     @ManyToOne
     @JoinColumn(name = "amministratore_id")

@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public NewUtenteRespDTO register(@RequestBody @Validated NewUtenteDTO body, BindingResult validationResult) {
-        // Check for validation errors
+
         if (validationResult.hasErrors()) {
             String messages = validationResult.getAllErrors().stream()
                     .map(objectError -> objectError.getDefaultMessage())

@@ -16,6 +16,7 @@ public class JWTTools {
 
     public String createToken(Utente utente) {
         return Jwts.builder()
+                
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .subject(String.valueOf(utente.getId()))

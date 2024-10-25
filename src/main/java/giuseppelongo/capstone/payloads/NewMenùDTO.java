@@ -11,12 +11,11 @@ public record NewMenùDTO(
         @NotEmpty(message = "La descrizione è obbligatoria")
         String descrizione,
 
-
         Double prezzo,
 
+        @NotEmpty(message = "La categoria è obbligatoria")
+        String categoria,
 
         UUID utenteId
-
-
 ) {
 }

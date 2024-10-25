@@ -21,7 +21,6 @@ public class MenùService {
     private MenùRepository menùRepository;
 
     public Menù save(NewMenùDTO dto, Utente utente) {
-
         if (!utente.getRuolo().equals(Ruolo.ADMIN) && !utente.getRuolo().equals(Ruolo.CLIENTE)) {
             throw new UnauthorizedException("L'utente non ha i permessi necessari.");
         }
@@ -30,6 +29,7 @@ public class MenùService {
         menù.setNomePiatto(dto.nomePiatto());
         menù.setDescrizione(dto.descrizione());
         menù.setPrezzo(dto.prezzo());
+        menù.setCategoria(dto.categoria());
 
         menù.setUtente(utente);
 
